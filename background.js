@@ -130,7 +130,7 @@ const setIcon = () => {
   }
 }
 
-const downloadPlaylist = async (playlist, pathPrefix) => {
+const downloadPlaylist = async (request, playlist, pathPrefix) => {
   for (let i = 0; i < playlist.tracks.length; i++) {
     if (!playlist.tracks[i].media) playlist.tracks[i] = await fetch(`https://api-v2.soundcloud.com/tracks/soundcloud:tracks:${playlist.tracks[i].id}?client_id=${clientID}`).then(r => r.json())
   }
@@ -138,8 +138,7 @@ const downloadPlaylist = async (playlist, pathPrefix) => {
     try {
       const url = coverArt ? getArtURL(playlist.tracks[i]) : await getDownloadURL(playlist.tracks[i], playlist.title)
       let filename = `${clean(playlist.tracks[i].title)}.${coverArt ? "jpg" : "mp3"}`.trim()
-      if (pathPrefix) filename = pathPrefix + "/" + filename
-      if (url) chrome.downloads.download({url, filename: `${clean(playlist.title)}/${filename}`, conflictAction: "overwrite"})
+      if (url) chrome.downloads.download({url, filename: `${pathPrefix}${clean(playlist.title)}/${filename}`, conflictAction: "overwrite"})
     } catch (e) {
       console.log(e)
       continue
@@ -209,7 +208,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             playlistArray.push(...playlists.collection)
           }
           for (let playlist of playlistArray) {
-            await downloadPlaylist(playlist, clean(request.user.username))
+            await downloadPlaylist(request, playlist, clean(request.user.username))
           }
         }
         catch (e) {
@@ -222,7 +221,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     }
 
     if (request.message === "download-playlist") {
-      await downloadPlaylist(request.playlist)
+      await downloadPlaylist(request, request.playlist)
     }
 
     if (request.message === "set-state") {
