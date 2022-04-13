@@ -231,7 +231,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       playlistsForUser = request.playlistsForUser === "on" ? true : false
       setIcon()
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, {message: "update-state", state: request.state, coverArt: request.coverArt, reposts: request.reposts})
+        chrome.tabs.sendMessage(tabs[0].id, {message: "update-state", state: request.state, coverArt: request.coverArt, reposts: request.reposts, playlistsForUser: request.playlistsForUser})
       })
     }
 })
