@@ -1,7 +1,7 @@
 let extensionEnabled = true
 let coverArt = false
 let reposts = false
-let albumsForUser = false
+let playlistsForUser = false
 let trackURL = ""
 let userURL = ""
 let playlistURL = ""
@@ -198,7 +198,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
           continue
         }
       }
-      if (albumsForUser) {
+      if (playlistsForUser) {
         try {
           const playlistArray = []
           let playlists = await fetch(`https://api-v2.soundcloud.com/users/${request.user.id}/playlists?client_id=${clientID}&limit=100`).then(r => r.json())
@@ -229,7 +229,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       extensionEnabled = request.state === "on" ? true : false
       coverArt = request.coverArt === "on" ? true : false
       reposts = request.reposts === "on" ? true : false
-      albumsForUser = request.albumsForUser === "on" ? true : false
+      playlistsForUser = request.playlistsForUser === "on" ? true : false
       setIcon()
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         chrome.tabs.sendMessage(tabs[0].id, {message: "update-state", state: request.state, coverArt: request.coverArt, reposts: request.reposts})
