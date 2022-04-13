@@ -44,6 +44,11 @@ repostCheckBox.onclick = () => {
     chrome.runtime.sendMessage({message: "set-state", ...state()})
 }
 
+playlistsCheckBox.onclick = () => {
+    chrome.storage.sync.set({info: state()})
+    chrome.runtime.sendMessage({message: "set-state", ...state()})
+}
+
 artCheckBox.onclick = () => {
     if (artCheckBox.checked) {
         artCheckBox.classList.add("pink-filter")
