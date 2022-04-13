@@ -1,7 +1,7 @@
 const checkBox = document.querySelector(".sc-ext-enable-checkbox")
 const artCheckBox = document.querySelector(".sc-ext-art-checkbox")
 const repostCheckBox = document.querySelector(".sc-ext-repost-checkbox")
-const playlistCheckBox = document.querySelector(".sc-ext-playlists-checkbox")
+const playlistsCheckBox = document.querySelector(".sc-ext-playlists-checkbox")
 const text = document.querySelectorAll(".sc-ext-text")
 
 const state = () => {
