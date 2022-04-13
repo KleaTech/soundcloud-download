@@ -213,7 +213,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         }
         catch (e) {
           console.log(e)
-          continue
         }
       }      
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
