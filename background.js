@@ -208,7 +208,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             playlistArray.push(...playlists.collection)
           }
           for (let playlist of playlistArray) {
-            await downloadPlaylist(request, playlist, clean(request.user.username))
+            await downloadPlaylist(request, playlist, `${clean(request.user.username)}/`)
           }
         }
         catch (e) {
